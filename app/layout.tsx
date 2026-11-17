@@ -2,6 +2,11 @@
 import "./globals.css";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Product Management System",
+  description: "Manage laptop products stored in PocketBase",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,14 +23,14 @@ export default function RootLayout({
             Home
           </Link>
 
-          <Link href="/search">
-            <span>⌕</span>
-            Search
+          <Link href="/listAllProducts">
+            <span>☰</span>
+            Laptops
           </Link>
 
-          <Link href="/profile">
-            <span>○</span>
-            Profile
+          <Link href="/addProduct">
+            <span>＋</span>
+            Add laptop
           </Link>
         </nav>
       </body>
