@@ -1,7 +1,3 @@
-// lib/product.tsx
-// Shared product type and validation, used by both the pages (browser)
-// and the API routes (server), so the same rules apply everywhere.
-
 export type ProductInput = {
   brand: string;
   model: string;

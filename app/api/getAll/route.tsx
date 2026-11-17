@@ -1,4 +1,3 @@
-// app/api/getAll/route.tsx
 import { NextResponse } from "next/server";
 import { db, authenticate } from "@/lib/database";
 

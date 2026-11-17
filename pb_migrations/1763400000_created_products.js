@@ -1,8 +1,5 @@
 /// <reference path="../pb_data/types.d.ts" />
 
-// Creates the "products" collection automatically the first time
-// "./pocketbase serve" runs. Each record has four text fields:
-// brand, model, price and description (plus PocketBase's own id/created/updated).
 migrate(
   (app) => {
     const collection = new Collection({

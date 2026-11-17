@@ -1,5 +1,3 @@
-// components/ProductForm.tsx
-// Form shared by the Add Product page and the Update Product page.
 "use client";
 
 import { useState } from "react";

@@ -1,6 +1,3 @@
-// lib/redis.tsx
-// Connection to the Redis cache (Redis Cloud). Server-side only: the
-// password in .env.local must never be sent to the browser.
 import "server-only";
 import { createClient } from "redis";
 

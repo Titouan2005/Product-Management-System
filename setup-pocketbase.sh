@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# setup-pocketbase.sh
-# Downloads the PocketBase server into the project root (Linux, macOS, Codespaces)
-# and creates the superuser account from the values in .env.local.
-#
-# Usage:  npm run pocketbase:setup      (or: bash setup-pocketbase.sh)
 
 set -euo pipefail
 

@@ -1,5 +1,3 @@
-// lib/api.tsx
-// Small helpers used by the pages (in the browser) to read products from our API routes.
 import type { Product } from "@/lib/product";
 
 const NOT_RUNNING = "Is PocketBase running?";

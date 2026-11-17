@@ -1,7 +1,3 @@
-// lib/homeText.tsx
-// All the text shown on the homepage. It is stored in the Redis cache
-// (as a hash under the key "homepage:text") and read from there each
-// time the homepage loads.
 import "server-only";
 import { cache } from "react";
 import { getRedis } from "@/lib/redis";

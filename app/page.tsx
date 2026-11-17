@@ -1,4 +1,3 @@
-// app/page.tsx
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { getHomeText } from "@/lib/homeText";

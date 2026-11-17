@@ -1,4 +1,3 @@
-// app/api/addProduct/route.tsx
 import { NextRequest, NextResponse } from "next/server";
 import { db, authenticate } from "@/lib/database";
 import { validateProduct } from "@/lib/product";

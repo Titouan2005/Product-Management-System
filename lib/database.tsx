@@ -1,4 +1,3 @@
-// lib/database.tsx
 import "server-only";
 import PocketBase from "pocketbase";
 

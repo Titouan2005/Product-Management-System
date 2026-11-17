@@ -1,4 +1,3 @@
-// app/api/updateProduct/route.tsx
 import { NextRequest, NextResponse } from "next/server";
 import { ClientResponseError } from "pocketbase";
 import { db, authenticate } from "@/lib/database";
