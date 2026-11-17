@@ -4,13 +4,34 @@
 import "server-only";
 import { createClient } from "redis";
 
+// Reads the Redis settings from .env.local and checks they are usable
+function readRedisConfig() {
+  // Accept "host", "host:port" or "redis://host:port" in REDIS_HOST
+  const rawHost = (process.env.REDIS_HOST ?? "").trim().replace(/^rediss?:\/\//, "");
+  const [host, portInHost] = rawHost.split(":");
+  const port = Number((process.env.REDIS_PORT ?? "").trim() || portInHost);
+  const username = (process.env.REDIS_USERNAME ?? "").trim() || "default";
+  const password = (process.env.REDIS_PASSWORD ?? "").trim();
+
+  if (!host) throw new Error("REDIS_HOST is missing in .env.local");
+  if (!port) throw new Error("REDIS_PORT is missing or not a number in .env.local");
+  if (!password) {
+    throw new Error(
+      "REDIS_PASSWORD is missing in .env.local (Redis Cloud needs the password of the 'default' user)"
+    );
+  }
+  return { host, port, username, password };
+}
+
 function createRedisClient() {
+  const { host, port, username, password } = readRedisConfig();
+
   return createClient({
-    username: process.env.REDIS_USERNAME || "default",
-    password: process.env.REDIS_PASSWORD,
+    username,
+    password,
     socket: {
-      host: process.env.REDIS_HOST,
-      port: Number(process.env.REDIS_PORT),
+      host,
+      port,
       connectTimeout: 5000,
       // Give up after 3 failed attempts so a page never waits forever
       reconnectStrategy: (retries) =>
@@ -37,10 +58,6 @@ function connectRedis(): Promise<RedisClient> {
 
 // Returns a connected Redis client (connects the first time it is called)
 export async function getRedis(): Promise<RedisClient> {
-  if (!process.env.REDIS_HOST || !process.env.REDIS_PORT) {
-    throw new Error("REDIS_HOST / REDIS_PORT are not set in .env.local");
-  }
-
   if (globalForRedis.redisClient) {
     const client = await globalForRedis.redisClient.catch(() => null);
     if (client?.isReady) return client;
