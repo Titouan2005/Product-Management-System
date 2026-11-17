@@ -10,18 +10,49 @@ data is stored in PocketBase and accessed through Next.js API routes.
 - [Next.js](https://nextjs.org/) (App Router) with React and TypeScript
 - [PocketBase](https://pocketbase.io/) database, accessed with the `pocketbase` JS SDK
 
+## Pages
+
+| Page | URL | What it does |
+|------|-----|--------------|
+| Home | `/` | Introduction to the application |
+| Products list | `/listAllProducts` | All products in the database, with View / Edit / Delete buttons and an **Add product** button |
+| Add product | `/addProduct` | Form to add a new product |
+| Single product | `/product/<id>` | All information about one product |
+| Update product | `/updateProduct/<id>` | Form pre-filled with the product, to update it |
+
+## API routes
+
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | `/api/getAll` | All products (newest first) |
+| GET | `/api/getProduct?id=<id>` | One product (404 if not found) |
+| POST | `/api/addProduct` | Create a product (JSON body: brand, model, price, description) |
+| PUT | `/api/updateProduct?id=<id>` | Update a product (same JSON body) |
+| DELETE | `/api/deleteProduct?id=<id>` | Delete a product |
+
+Invalid data (empty fields, price that is not a positive number with up to
+2 decimals, text too long) is rejected with status 400 and a message per field.
+
 ## Project structure
 
 ```
 app/
-  layout.tsx        Root layout with the bottom navigation bar
-  page.tsx          Home page (introduction to the app)
-  globals.css       Global styles
-  api/              Backend API routes (route.tsx files)
+  layout.tsx              Root layout with the bottom navigation bar
+  page.tsx                Home page
+  listAllProducts/        Products list page
+  addProduct/             Add product page
+  product/[id]/           Single product page
+  updateProduct/[id]/     Update product page
+  api/                    API routes (route.tsx files)
+  globals.css             Global + responsive styles
+components/
+  ProductForm.tsx         Form shared by the add and update pages
 lib/
-  database.tsx      PocketBase connection + authenticate() helper
-pb_migrations/      Creates the "products" collection automatically
-setup-pocketbase.sh Downloads PocketBase and creates the superuser
+  database.tsx            PocketBase connection + authenticate() helper
+  product.tsx             Product type + validation (shared by pages and API)
+  api.tsx                 Helpers the pages use to read products from the API
+pb_migrations/            Creates the "products" collection automatically
+setup-pocketbase.sh       Downloads PocketBase and creates the superuser
 ```
 
 ## PocketBase setup
