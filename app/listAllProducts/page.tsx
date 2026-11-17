@@ -74,7 +74,7 @@ export default function ListAllProducts() {
                   <td className="rowActions">
                     <Link
                       href={`/product/${product.id}`}
-                      className="button buttonSmall"
+                      className="button buttonSmall buttonSecondary"
                     >
                       View
                     </Link>
@@ -86,7 +86,7 @@ export default function ListAllProducts() {
                     </Link>
                     <button
                       type="button"
-                      className="button buttonSmall buttonDanger"
+                      className="button buttonSmall buttonSecondary"
                       onClick={() => deleteProduct(product)}
                     >
                       Delete

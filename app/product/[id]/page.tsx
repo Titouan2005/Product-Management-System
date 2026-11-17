@@ -70,12 +70,12 @@ export default function SingleProduct() {
         </Link>
         {product && (
           <>
-            <Link href={`/updateProduct/${product.id}`} className="button">
+            <Link href={`/updateProduct/${product.id}`} className="button buttonSecondary">
               Edit
             </Link>
             <button
               type="button"
-              className="button buttonDanger"
+              className="button buttonSecondary"
               onClick={deleteProduct}
             >
               Delete
