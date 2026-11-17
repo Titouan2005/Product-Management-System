@@ -9,6 +9,7 @@ data is stored in PocketBase and accessed through Next.js API routes.
 
 - [Next.js](https://nextjs.org/) (App Router) with React and TypeScript
 - [PocketBase](https://pocketbase.io/) database, accessed with the `pocketbase` JS SDK
+- [Redis](https://redis.io/) (Redis Cloud) cache for the homepage text, accessed with the `redis` package
 
 ## Pages
 
@@ -49,6 +50,8 @@ components/
   ProductForm.tsx         Form shared by the add and update pages
 lib/
   database.tsx            PocketBase connection + authenticate() helper
+  redis.tsx               Redis connection
+  homeText.tsx            Homepage text + reading it from the Redis cache
   product.tsx             Product type + validation (shared by pages and API)
   api.tsx                 Helpers the pages use to read products from the API
 pb_migrations/            Creates the "products" collection automatically
@@ -89,16 +92,41 @@ setup-pocketbase.sh       Downloads PocketBase and creates the superuser
    superuser, open **products** and add the ten laptop records
    (4 Dell, 4 Lenovo, 2 Acer) with **New record**.
 
+## Redis text cache (homepage)
+
+All the text on the homepage (browser tab title, heading, description and
+card) is stored in Redis as a hash under the key **`homepage:text`** and is
+read from Redis every time the homepage loads:
+
+1. The homepage asks Redis for `homepage:text`.
+2. **Cache hit:** the text comes from Redis.
+3. **Cache miss** (key not there yet): the default text from
+   `lib/homeText.tsx` is shown and stored in Redis, so the next load is a hit.
+4. **Redis unreachable:** the default text is shown so the homepage still works.
+
+The server log shows which case happened (`served from Redis cache`,
+`cache miss, storing it in Redis` or `Redis unavailable`). To change the
+homepage text, edit the fields of `homepage:text` in Redis (e.g. with Redis
+Insight) and reload the page.
+
 ## Environment variables
 
 Copy `.env.example` to `.env.local` at the project root and fill in your
-PocketBase superuser details:
+own values:
 
 ```
 POCKETBASE_URL=http://127.0.0.1:8090
 POCKETBASE_SUPERUSER_EMAIL=your-email@example.com
 POCKETBASE_SUPERUSER_PASSWORD=your-password
+
+REDIS_HOST=your-database.redis.io
+REDIS_PORT=12345
+REDIS_USERNAME=default
+REDIS_PASSWORD=your-redis-password
 ```
+
+The Redis values are on your Redis Cloud database page: **Public endpoint**
+(`host:port`) and the password of the `default` user.
 
 ## Running the app
 
@@ -108,4 +136,5 @@ npm run dev
 ```
 
 Then open [http://localhost:3000](http://localhost:3000).
-PocketBase must be running at the same time.
+PocketBase must be running at the same time, and the Redis details must be
+in `.env.local` for the homepage text cache.
