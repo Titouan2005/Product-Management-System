@@ -20,19 +20,32 @@ app/
   api/              Backend API routes (route.tsx files)
 lib/
   database.tsx      PocketBase connection + authenticate() helper
+pb_migrations/      Creates the "products" collection automatically
+setup-pocketbase.sh Downloads PocketBase and creates the superuser
 ```
 
 ## PocketBase setup
 
-1. Start PocketBase:
+1. Copy `.env.example` to `.env.local` and fill in the superuser email and
+   password you want to use (see below).
+2. Download PocketBase and create the superuser:
+
+   ```bash
+   npm run pocketbase:setup
+   ```
+
+   On Windows, download `pocketbase_0.40.6_windows_amd64.zip` from the
+   [PocketBase releases](https://github.com/pocketbase/pocketbase/releases),
+   unzip `pocketbase.exe` into the project root and create the superuser in
+   the admin console the first time you open it.
+3. Start PocketBase (keep it running in its own terminal):
 
    ```bash
    ./pocketbase serve
    ```
 
-2. Open the admin console by adding `/_/` to the database URL
-   (e.g. `http://127.0.0.1:8090/_/`).
-3. Create a collection called **`products`** with these four **text** fields:
+   On first start, the migration in `pb_migrations/` creates the
+   **`products`** collection with these four **text** fields:
 
    | Field         | Type |
    |---------------|------|
@@ -41,7 +54,9 @@ lib/
    | `price`       | Text |
    | `description` | Text |
 
-4. Add the ten laptop records (4 Dell, 4 Lenovo, 2 Acer) with **New record**.
+4. Open the admin console at `http://127.0.0.1:8090/_/`, log in with the
+   superuser, open **products** and add the ten laptop records
+   (4 Dell, 4 Lenovo, 2 Acer) with **New record**.
 
 ## Environment variables
 

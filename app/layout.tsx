@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Product Management System",
-  description: "Manage laptop products stored in PocketBase",
+  description: "Manage products stored in a PocketBase database",
 };
 
 export default function RootLayout({
@@ -25,12 +25,7 @@ export default function RootLayout({
 
           <Link href="/listAllProducts">
             <span>☰</span>
-            Laptops
-          </Link>
-
-          <Link href="/addProduct">
-            <span>＋</span>
-            Add laptop
+            Products
           </Link>
         </nav>
       </body>
