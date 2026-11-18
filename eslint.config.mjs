@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // PocketBase migrations run inside PocketBase, not Next.js
     "pb_migrations/**",
+    "pb_data/**",
   ]),
 ]);
 
