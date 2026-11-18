@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { fetchProduct } from "@/lib/api";
+import { fetchProduct, markProductsChanged } from "@/lib/api";
 import type { Product } from "@/lib/product";
 
 export default function SingleProduct() {
@@ -24,6 +24,7 @@ export default function SingleProduct() {
       setError("Could not delete the product.");
       return;
     }
+    markProductsChanged();
     router.push("/listAllProducts");
   };
 

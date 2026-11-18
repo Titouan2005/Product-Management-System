@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { fetchProduct } from "@/lib/api";
+import { fetchProduct, markProductsChanged } from "@/lib/api";
 import ProductForm from "@/components/ProductForm";
 import type { Product, ProductInput } from "@/lib/product";
 
@@ -29,6 +29,7 @@ export default function UpdateProduct() {
       }
 
       // Go back to the product's page
+      markProductsChanged();
       router.push(`/product/${id}`);
     } catch {
       return { error: "Could not update the product. Is PocketBase running?" };

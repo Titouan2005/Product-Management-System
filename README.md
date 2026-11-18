@@ -109,6 +109,17 @@ The server log shows which case happened (`served from Redis cache`,
 homepage text, edit the fields of `homepage:text` in Redis (e.g. with Redis
 Insight) and reload the page.
 
+## Optimisation
+
+Two optimisations make the app faster to deliver (see
+[OPTIMISATION.md](OPTIMISATION.md) for the details and measurements):
+
+1. **Browser caching:** the GET API routes send a `Cache-Control` header, so
+   the browser reuses recent answers instead of asking the server again.
+2. **Smaller API responses:** PocketBase only returns the fields each page
+   needs (the products list no longer downloads descriptions), so the list
+   response is 72% smaller.
+
 ## Environment variables
 
 Copy `.env.example` to `.env.local` at the project root and fill in your

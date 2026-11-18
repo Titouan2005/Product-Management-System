@@ -7,9 +7,14 @@ export type ProductInput = {
 
 export type Product = ProductInput & {
   id: string;
-  created: string;
-  updated: string;
 };
+
+// What the products list receives (no description, see /api/getAll)
+export type ProductSummary = Omit<Product, "description">;
+
+// Optimisation 2: the browser may reuse GET answers for 30 seconds
+// (and keep showing them for 60 more while it fetches a fresh copy)
+export const API_CACHE_CONTROL = "public, max-age=30, stale-while-revalidate=60";
 
 export type ProductErrors = Partial<Record<keyof ProductInput, string>>;
 

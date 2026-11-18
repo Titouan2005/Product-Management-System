@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { fetchProducts } from "@/lib/api";
-import type { Product } from "@/lib/product";
+import { fetchProducts, markProductsChanged } from "@/lib/api";
+import type { ProductSummary } from "@/lib/product";
 
 export default function ListAllProducts() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   // Delete one product, then remove it from the list
-  const deleteProduct = async (product: Product) => {
+  const deleteProduct = async (product: ProductSummary) => {
     if (!confirm(`Delete ${product.brand} ${product.model}?`)) return;
 
     const res = await fetch(`/api/deleteProduct?id=${product.id}`, {
@@ -21,6 +21,7 @@ export default function ListAllProducts() {
       setError("Could not delete the product.");
       return;
     }
+    markProductsChanged();
     setProducts(products.filter((p) => p.id !== product.id));
   };
 

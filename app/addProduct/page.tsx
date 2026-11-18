@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ProductForm from "@/components/ProductForm";
+import { markProductsChanged } from "@/lib/api";
 import type { ProductInput } from "@/lib/product";
 
 export default function AddProduct() {
@@ -23,6 +24,7 @@ export default function AddProduct() {
       }
 
       // Go to the new product's page
+      markProductsChanged();
       router.push(`/product/${data.id}`);
     } catch {
       return { error: "Could not add the product. Is PocketBase running?" };
